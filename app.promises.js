@@ -57,17 +57,38 @@ const getStatus = (userId) => {
         console.log('average: ', average);
         return `average is ${average}`;
     })
-}
+};
 
-getStatus(1).then((status) => {
+//async await
+
+const getStatusAlt = async (userId) => {
+    const user = await getUser(userId);
+    const grades = await getGrades(user.schoolId);
+    let average = 0;
+        if(grades.length > 0) {
+            average = grades.map((grade) => grade.grade).reduce((a, b) => {
+                return a + b;
+            }) / grades.length;
+        }
+        console.log('average: ', average);
+        return `average is ${average}`;
+};
+
+getStatusAlt(1).then((status) => {
     console.log(status);
 }).catch((e) => {
     console.log(e);
-});
-getUser(2).then((user) => {
-    console.log(user);
-}).catch((e) => { console.log(e); });
+})
 
-getGrades(102).then((grades) => {
-    console.log(grades);
-}).catch((err) => console.log(err));
+// getStatus(11).then((status) => {
+//     console.log(status);
+// }).catch((e) => {
+//     console.log(e);
+// });
+// getUser(2).then((user) => {
+//     console.log(user);
+// }).catch((e) => { console.log(e); });
+
+// getGrades(102).then((grades) => {
+//     console.log(grades);
+// }).catch((err) => console.log(err));
